@@ -1,0 +1,3 @@
+[submodule "identity-client-scim2"]
+	path = identity-client-scim2
+	url = https://github.com/suvera/identity-client-scim2.git

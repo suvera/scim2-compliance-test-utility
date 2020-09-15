@@ -1,0 +1,139 @@
+<div th:fragment="home">
+
+    <div class="row">
+        <div id="div-success" class="alert alert-success" role="alert" style="display:none;">
+        </div>
+
+        <div id="div-error" class="alert error" role="alert" style="display:none;">
+        </div>
+    </div>
+
+    <form id="test-form">
+        <div>
+            <div class="row">
+                <div class="col-8" style="">
+                    <div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="endPoint-lbl">SCIM Endpoint</span>
+                            </div>
+                            <input type="url" class="form-control" id="endPoint" name="endPoint"
+                                   placeholder="http://scim.base.url"
+                                   aria-label="SCIM Endpoint"
+                                   aria-describedby="endPoint-lbl">
+                        </div>
+
+                        <h4><small class="text-muted">Authentication:</small></h4>
+
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Username & Password</span>
+                            </div>
+                            <input type="text" aria-label="Username" class="form-control"
+                                   name="username" id="username" placeholder="Username">
+                            <input type="text" aria-label="Password" class="form-control"
+                                   name="password" id="password" placeholder="Password">
+                        </div>
+
+                        <h6><small class="text-muted">(OR)</small></h6>
+
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">JWT Token</span>
+                            </div>
+                            <input type="url" class="form-control"
+                                   name="jwtToken" id="jwtToken" aria-label="JWT Token" placeholder="JWT Token">
+                        </div>
+
+
+                        <div class="row ml-3">
+                            <button class="btn btn-primary" type="button" id="run-btn" onclick="beginTest();">
+                        <span class="spinner-border spinner-border-sm" role="status"
+                              id="run-btn-spin" style="display:none;" aria-hidden="true"></span>
+                                <span id="run-btn-text">Go</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4" style="border-left:1px solid #ccc;">
+                    <h3><small class="text-muted">Include/Exclude Tests:</small></h3>
+                    <div class="pl-3">
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox" checked value="1"
+                                   name="usersCheck" id="usersCheck">
+                            <label class="form-check-label" style="font-size: 92%;" for="usersCheck">
+                                /Users
+                                <a href="https://tools.ietf.org/html/rfc7644#section-3.2" target="_blank">More info</a>
+                                <p style="margin-bottom:1px;"><small class="text-muted">Note: actual uri will be fetched from SCIM</small></p>
+                            </label>
+                        </div>
+
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox" value="1" checked
+                                   name="groupsCheck" id="groupsCheck">
+                            <label class="form-check-label" style="font-size: 92%;" for="groupsCheck">
+                                /Groups
+                                <a href="https://tools.ietf.org/html/rfc7644#section-3.2" target="_blank">More info</a>
+                            </label>
+                        </div>
+
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox" value="1" name="searchCheck" id="searchCheck">
+                            <label class="form-check-label" style="font-size: 92%;" for="searchCheck">
+                                /.search,
+                                <a href="https://tools.ietf.org/html/rfc7644#section-3.4.3" target="_blank">More info</a>
+                            </label>
+                        </div>
+
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox" value="1" name="bulkCheck" id="bulkCheck">
+                            <label class="form-check-label" style="font-size: 92%;" for="bulkCheck">
+                                /Bulk
+                                <a href="https://tools.ietf.org/html/rfc7644#section-3.7" target="_blank">More info</a>
+                            </label>
+                        </div>
+
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox" value="1" name="meCheck" id="meCheck">
+                            <label class="form-check-label" style="font-size: 92%;" for="meCheck">
+                                /Me
+                                <a href="https://tools.ietf.org/html/rfc7644#section-3.11" target="_blank">More info</a>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr/>
+
+    <div>
+
+        <div id="test-results-stats" style="display:none;" class="text-right">
+            <button type="button" class="btn btn-success">
+                Success <span class="badge badge-light" id="tests-success">0</span>
+            </button>
+
+            <button type="button" class="btn btn-danger">
+                Failed <span class="badge badge-light" id="tests-failed">0</span>
+            </button>
+
+            <button type="button" class="btn btn-info">
+                NotSupported <span class="badge badge-light" id="tests-not-supported">0</span>
+            </button>
+
+            <button type="button" class="btn btn-dark">
+                Total <span class="badge badge-light" id="tests-total">0</span>
+            </button>
+        </div>
+
+        <div id="test-results" style="display:none;">
+        </div>
+
+    </div>
+
+</div>
