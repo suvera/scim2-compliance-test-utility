@@ -1,10 +1,14 @@
 package dev.suvera.opensource.scim2.compliance.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.suvera.opensource.scim2.compliance.data.json.SchemaExtensionName;
 import dev.suvera.opensource.scim2.compliance.utils.JsonSchemaBuilder;
 import io.scim2.swagger.client.ScimApiException;
 import lombok.Data;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,17 +20,27 @@ import java.util.Map;
  * date: 9/3/2020 2:19 PM
  */
 @Data
-@ToString
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class Schemas {
 
+    @JsonProperty("Resources")
     private List<Schema> schemas;
+
+    @JsonIgnore
     private ResourceTypes resourceTypes;
+
+    @JsonIgnore
     private Map<String, Schema> byId = new HashMap<>();
+
+    @JsonIgnore
     private Map<String, String> jsonSchema = new HashMap<>();
+
+    @JsonIgnore
     private Map<String, String> jsonListSchema = new HashMap<>();
 
-    public Schemas(List<Schema> schemas, ResourceTypes resourceTypes) throws ScimApiException {
-        this.schemas = schemas;
+    public void setResourceTypes(ResourceTypes resourceTypes) throws ScimApiException {
         this.resourceTypes = resourceTypes;
         for (Schema schema : schemas) {
             byId.put(schema.getId(), schema);
@@ -42,6 +56,7 @@ public class Schemas {
         }
     }
 
+    @JsonIgnore
     private void buildJsonSchema(Schema schema) throws ScimApiException {
 
         ResourceType resourceType = resourceTypes.getResourceBySchema(schema.getId());
@@ -77,14 +92,17 @@ public class Schemas {
         jsonListSchema.put(schema.getId(), builder.buildList());
     }
 
+    @JsonIgnore
     public Schema getSchema(String id) {
         return byId.get(id);
     }
 
+    @JsonIgnore
     public String getJsonSchema(String id) {
         return jsonSchema.get(id);
     }
 
+    @JsonIgnore
     public String getJsonListSchema(String id) {
         return jsonListSchema.get(id);
     }

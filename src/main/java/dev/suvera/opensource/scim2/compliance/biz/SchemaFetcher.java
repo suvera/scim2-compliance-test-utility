@@ -7,7 +7,6 @@ import io.scim2.swagger.client.api.Scimv2SchemaApi;
 import io.scim2.swagger.client.api.Scimv2ServiceProviderConfigApi;
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -51,13 +50,14 @@ public class SchemaFetcher {
         );
 
 
-        ResourceType[] resourceTypes = ScimResponseValidator.processResponse(
+        ResourceTypes resourceTypes = ScimResponseValidator.processResponse(
                 response.getData(),
                 "/schema/ResourceTypes.schema.json",
-                ResourceType[].class
+                ResourceTypes.class
         );
 
-        for (ResourceType resourceType : resourceTypes) {
+        resourceTypes.init();
+        for (ResourceType resourceType : resourceTypes.getResourceTypes()) {
             api.getScimApiClient().setURL(resourceType.getMeta().getLocation());
             api.getScimApiClient().setServicePath(null);
             response = api.getResourceTypeWithHttpInfo();
@@ -74,7 +74,7 @@ public class SchemaFetcher {
             );
         }
 
-        return new ResourceTypes(Arrays.asList(resourceTypes));
+        return resourceTypes;
     }
 
     public Schemas fetchSchemas(ResourceTypes resourceTypes) throws Exception {
@@ -87,14 +87,15 @@ public class SchemaFetcher {
                 Collections.singletonList(200)
         );
 
-
-        Schema[] schemas = ScimResponseValidator.processResponse(
+        Schemas schemas = ScimResponseValidator.processResponse(
                 response.getData(),
                 "/schema/Schemas.schema.json",
-                Schema[].class
+                Schemas.class
         );
 
-        for (Schema schema : schemas) {
+        schemas.setResourceTypes(resourceTypes);
+
+        for (Schema schema : schemas.getSchemas()) {
             api.getScimApiClient().setURL(schema.getMeta().getLocation());
             api.getScimApiClient().setServicePath(null);
             response = api.getgetSchemasWithHttpInfo();
@@ -112,7 +113,7 @@ public class SchemaFetcher {
             );
         }
 
-        return new Schemas(Arrays.asList(schemas), resourceTypes);
+        return schemas;
     }
 
 

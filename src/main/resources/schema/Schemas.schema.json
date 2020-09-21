@@ -2,44 +2,72 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "ResourceType",
     "description": "Metadata about a resources",
-    "type": "array",
+    "type": "object",
     "additionalItems": false,
-    "items": {
-        "type": "object",
-        "properties": {
-            "schemas": {
-                "type": "array",
-                "minItems": 1,
-                "maxItems": 1,
-                "items": {
-                    "type": "string",
-                    "enum": [
-                        "urn:ietf:params:scim:schemas:core:2.0:Schema"
-                    ]
-                }
-            },
-            "id": {
-                "type": "string"
-            },
-            "name": {
-                "type": "string"
-            },
-            "description": {
-                "type": "string"
-            },
-            "attributes": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/definitions/attribute"
-                }
+    "properties": {
+        "totalResults": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "itemsPerPage": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "startIndex": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "schemas": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+                "type": "string",
+                "enum": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ]
             }
         },
-        "required": [
-            "schemas",
-            "id",
-            "meta",
-            "attributes"
-        ]
+        "Resources": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "schemas": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 1,
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "urn:ietf:params:scim:schemas:core:2.0:Schema"
+                            ]
+                        }
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/attribute"
+                        }
+                    }
+                },
+                "required": [
+                    "schemas",
+                    "id",
+                    "meta",
+                    "attributes"
+                ]
+            }
+        }
     },
     "definitions": {
         "attribute": {

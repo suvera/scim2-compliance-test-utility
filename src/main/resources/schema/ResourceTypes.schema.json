@@ -2,62 +2,90 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "ResourceType",
     "description": "Metadata about a resources",
-    "type": "array",
+    "type": "object",
     "additionalItems": false,
-    "items": {
-        "type": "object",
-        "properties": {
-            "id": {
-                "type": "string"
-            },
-            "schemas": {
-                "type": "array",
-                "minItems": 1,
-                "maxItems": 1,
-                "items": {
-                    "type": "string",
-                    "enum": [
-                        "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
-                    ]
-                }
-            },
-            "name": {
-                "type": "string"
-            },
-            "description": {
-                "type": "string"
-            },
-            "endpoint": {
-                "type": "string"
-            },
-            "schema": {
-                "type": "string"
-            },
-            "schemaExtensions": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": {
-                            "type": "boolean"
-                        }
-                    },
-                    "required": [
-                        "schema",
-                        "required"
-                    ]
-                }
+    "properties": {
+        "totalResults": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "itemsPerPage": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "startIndex": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "schemas": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+                "type": "string",
+                "enum": [
+                    "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+                ]
             }
         },
-        "required": [
-            "schemas",
-            "meta",
-            "name",
-            "endpoint",
-            "schema"
-        ]
+        "Resources": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "schemas": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 1,
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                            ]
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "endpoint": {
+                        "type": "string"
+                    },
+                    "schema": {
+                        "type": "string"
+                    },
+                    "schemaExtensions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "required": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "schema",
+                                "required"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "schemas",
+                    "meta",
+                    "name",
+                    "endpoint",
+                    "schema"
+                ]
+            }
+        }
     }
 }
