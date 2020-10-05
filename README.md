@@ -17,6 +17,9 @@ cd scim2-compliance-test-utility
 mvn clean install
 
 
+mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client
+
+
 # Start application on port 8080
 java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
