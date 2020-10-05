@@ -13,15 +13,8 @@ git clone https://github.com/suvera/scim2-compliance-test-utility.git
 
 cd scim2-compliance-test-utility
 
-
-mvn clean install
-
-
-mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client
-
-
 # Start application on port 8080
-java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
+java -jar dist/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 
 # Logs
@@ -30,6 +23,20 @@ java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.j
 2020-09-09 13:06:12.578  INFO 20316 --- [  restartedMain] d.s.o.scim2.compliance.Scim2Application  
 : Started Scim2Application in 2.735 seconds (JVM running for 3.489)
 
+
+# it's done
+
+
+
+############################
+#
+#   or, in other way you can compile it in your own way using maven and then start application.
+#
+mvn clean install
+
+mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client
+
+java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 ```
 
