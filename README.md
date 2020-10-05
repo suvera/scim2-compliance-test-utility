@@ -18,7 +18,7 @@ mvn clean install
 
 
 # Start application on port 8080
-java -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
+java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 
 # Logs
