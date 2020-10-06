@@ -60,22 +60,19 @@
                         "type": "string"
                     },
                     "schemaExtensions": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "required": {
-                                    "type": "boolean"
-                                }
+                        "type": "object",
+                        "properties": {
+                            "schema": {
+                                "type": "string"
                             },
-                            "required": [
-                                "schema",
-                                "required"
-                            ]
-                        }
+                            "required": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "schema",
+                            "required"
+                        ]
                     }
                 },
                 "required": [

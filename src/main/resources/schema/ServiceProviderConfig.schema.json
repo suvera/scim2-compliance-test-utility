@@ -149,7 +149,6 @@
     },
     "required": [
         "schemas",
-        "meta",
         "patch",
         "bulk",
         "filter",

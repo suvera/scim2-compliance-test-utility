@@ -34,7 +34,7 @@ java -jar dist/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 #
 mvn clean install
 
-mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client
+mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client -Dversion=1.0.1-SNAPSHOT
 
 java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 

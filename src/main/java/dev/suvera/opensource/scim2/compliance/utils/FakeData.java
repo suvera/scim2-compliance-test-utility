@@ -88,10 +88,9 @@ public class FakeData {
         List<String> schemaList = new ArrayList<>();
         schemaList.add(resourceType.getSchema());
         if (resourceType.getSchemaExtensions() != null) {
-            for (SchemaExtensionName ext : resourceType.getSchemaExtensions()) {
-                schemaList.add(ext.getSchema());
-                root.k(ext.getSchema(), getExtensionData(ext.getSchema(), schemas, resourceTypes));
-            }
+            SchemaExtensionName ext = resourceType.getSchemaExtensions();
+            schemaList.add(ext.getSchema());
+            root.k(ext.getSchema(), getExtensionData(ext.getSchema(), schemas, resourceTypes));
         }
         root.k("schemas", schemaList);
 

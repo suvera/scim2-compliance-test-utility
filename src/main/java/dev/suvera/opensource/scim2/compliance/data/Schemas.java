@@ -63,25 +63,24 @@ public class Schemas {
         List<SchemaExtension> extensions = new ArrayList<>();
 
         if (resourceType != null && resourceType.getSchemaExtensions() != null) {
-            for (SchemaExtensionName extensionName : resourceType.getSchemaExtensions()) {
-                Schema extension = byId.get(extensionName.getSchema());
-                if (extension == null) {
-                    throw new ScimApiException("Could not find Schema for Extension '"
-                            + extensionName.getSchema() + "' for Core Schema " + schema.getId());
-                }
-
-                if (schema.getId().equals(extensionName.getSchema())) {
-                    throw new ScimApiException("SCIM Schema extension cannot be itself, " +
-                            "Circular References are not allowed " + extensionName.getSchema());
-                }
-
-                if (ScimConstants.coreSchemas.contains(extensionName.getSchema())) {
-                    throw new ScimApiException("SCIM Schema extension cannot be one of Core Schema's " +
-                            extensionName.getSchema());
-                }
-
-                extensions.add(new SchemaExtension(extension, extensionName.isRequired()));
+            SchemaExtensionName extensionName = resourceType.getSchemaExtensions();
+            Schema extension = byId.get(extensionName.getSchema());
+            if (extension == null) {
+                throw new ScimApiException("Could not find Schema for Extension '"
+                        + extensionName.getSchema() + "' for Core Schema " + schema.getId());
             }
+
+            if (schema.getId().equals(extensionName.getSchema())) {
+                throw new ScimApiException("SCIM Schema extension cannot be itself, " +
+                        "Circular References are not allowed " + extensionName.getSchema());
+            }
+
+            if (ScimConstants.coreSchemas.contains(extensionName.getSchema())) {
+                throw new ScimApiException("SCIM Schema extension cannot be one of Core Schema's " +
+                        extensionName.getSchema());
+            }
+
+            extensions.add(new SchemaExtension(extension, extensionName.isRequired()));
         }
 
         JsonSchemaBuilder builder = new JsonSchemaBuilder(

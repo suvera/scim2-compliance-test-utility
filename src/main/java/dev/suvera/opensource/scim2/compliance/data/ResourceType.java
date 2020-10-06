@@ -25,5 +25,5 @@ public class ResourceType {
 
     private String endpoint;
     private String schema;
-    private List<SchemaExtensionName> schemaExtensions;
+    private SchemaExtensionName schemaExtensions;
 }
