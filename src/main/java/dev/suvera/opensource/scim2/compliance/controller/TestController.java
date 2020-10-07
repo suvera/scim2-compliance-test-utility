@@ -36,7 +36,8 @@ public class TestController {
             @RequestParam(required = false, name = "searchCheck", defaultValue = "0") int searchCheck,
             @RequestParam(required = false, name = "usersCheck", defaultValue = "0") int usersCheck,
             @RequestParam(required = false, name = "groupsCheck", defaultValue = "0") int groupsCheck,
-            @RequestParam(required = false, name = "bulkCheck", defaultValue = "0") int bulkCheck
+            @RequestParam(required = false, name = "bulkCheck", defaultValue = "0") int bulkCheck,
+            @RequestParam(required = false, name = "checkIndResLocation", defaultValue = "0") int checkIndResource
     ) {
         Xmap map = Xmap.q();
 
@@ -56,6 +57,7 @@ public class TestController {
         context.setUsersIncluded(usersCheck == 1);
         context.setGroupsIncluded(groupsCheck == 1);
         context.setBulkIncluded(bulkCheck == 1);
+        context.setCheckIndResource(checkIndResource == 1);
 
         String runId = UUID.randomUUID().toString();
         executionService.executeTests(runId, context);

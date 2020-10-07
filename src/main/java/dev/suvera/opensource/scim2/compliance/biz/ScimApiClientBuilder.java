@@ -1,11 +1,14 @@
 package dev.suvera.opensource.scim2.compliance.biz;
 
+import com.squareup.okhttp.Interceptor;
 import dev.suvera.opensource.scim2.compliance.data.TestContext;
 import dev.suvera.opensource.scim2.compliance.enums.AuthenticationType;
 import io.scim2.swagger.client.ScimApiClient;
 import io.scim2.swagger.client.ScimApiException;
 import io.scim2.swagger.client.api.*;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * author: suvera
@@ -35,6 +38,12 @@ public class ScimApiClientBuilder {
             client.setUsername(testContext.getUserName());
             client.setPassword(testContext.getPassword());
         }
+
+        List<Interceptor> appInterceptors = client.getHttpClient().interceptors();
+        appInterceptors.add(new LoggingInterceptor("APP"));
+
+        List<Interceptor> netInterceptors = client.getHttpClient().networkInterceptors();
+        netInterceptors.add(new LoggingInterceptor("NETWORK"));
 
         return client;
     }

@@ -57,21 +57,23 @@ public class SchemaFetcher {
         );
 
         resourceTypes.init();
-        for (ResourceType resourceType : resourceTypes.getResourceTypes()) {
-            api.getScimApiClient().setURL(resourceType.getMeta().getLocation());
-            api.getScimApiClient().setServicePath(null);
-            response = api.getResourceTypeWithHttpInfo();
+        if (clientBuilder.getTestContext().isCheckIndResource()) {
+            for (ResourceType resourceType : resourceTypes.getResourceTypes()) {
+                api.getScimApiClient().setURL(resourceType.getMeta().getLocation());
+                api.getScimApiClient().setServicePath(null);
+                response = api.getResourceTypeWithHttpInfo();
 
-            ScimResponseValidator.processResponseHeaders(
-                    response.getStatusCode(),
-                    response.getHeaders(),
-                    Collections.singletonList(200)
-            );
-            ScimResponseValidator.processResponse(
-                    response.getData(),
-                    "/schema/ResourceType.schema.json",
-                    Schema.class
-            );
+                ScimResponseValidator.processResponseHeaders(
+                        response.getStatusCode(),
+                        response.getHeaders(),
+                        Collections.singletonList(200)
+                );
+                ScimResponseValidator.processResponse(
+                        response.getData(),
+                        "/schema/ResourceType.schema.json",
+                        Schema.class
+                );
+            }
         }
 
         return resourceTypes;
@@ -95,22 +97,24 @@ public class SchemaFetcher {
 
         schemas.setResourceTypes(resourceTypes);
 
-        for (Schema schema : schemas.getSchemas()) {
-            api.getScimApiClient().setURL(schema.getMeta().getLocation());
-            api.getScimApiClient().setServicePath(null);
-            response = api.getgetSchemasWithHttpInfo();
+        if (clientBuilder.getTestContext().isCheckIndResource()) {
+            for (Schema schema : schemas.getSchemas()) {
+                api.getScimApiClient().setURL(schema.getMeta().getLocation());
+                api.getScimApiClient().setServicePath(null);
+                response = api.getgetSchemasWithHttpInfo();
 
-            ScimResponseValidator.processResponseHeaders(
-                    response.getStatusCode(),
-                    response.getHeaders(),
-                    Collections.singletonList(200)
-            );
+                ScimResponseValidator.processResponseHeaders(
+                        response.getStatusCode(),
+                        response.getHeaders(),
+                        Collections.singletonList(200)
+                );
 
-            ScimResponseValidator.processResponse(
-                    response.getData(),
-                    "/schema/Schema.schema.json",
-                    Schema.class
-            );
+                ScimResponseValidator.processResponse(
+                        response.getData(),
+                        "/schema/Schema.schema.json",
+                        Schema.class
+                );
+            }
         }
 
         return schemas;

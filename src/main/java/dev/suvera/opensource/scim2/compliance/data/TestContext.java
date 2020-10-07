@@ -24,6 +24,7 @@ public class TestContext {
     private boolean bulkIncluded;
     private boolean usersIncluded;
     private boolean groupsIncluded;
+    private boolean checkIndResource;
 
     @Override
     public String toString() {
@@ -39,6 +40,7 @@ public class TestContext {
                 "\n\t, bulkIncluded=" + bulkIncluded +
                 "\n\t, usersIncluded=" + usersIncluded +
                 "\n\t, groupsIncluded=" + groupsIncluded +
+                "\n\t, checkIndResource=" + checkIndResource +
                 "\n}";
     }
 }
