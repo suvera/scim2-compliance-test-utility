@@ -13,7 +13,7 @@ target/
 
 # Package Files #
 *.jar
-!dependencies/*.jar
+!dependencies/**/*.jar
 !dist/*.jar
 *.war
 *.nar

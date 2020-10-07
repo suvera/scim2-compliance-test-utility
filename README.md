@@ -1,6 +1,24 @@
 # SCIM 2.0 Compliance Test Utility
 
-scim2-compliance-test-utility
+System for Cross-domain Identity Management (**SCIM**) specification is designed to make managing 
+user identities in cloud-based applications and services easier. The specification suite seeks to 
+build upon experience with existing schemas and deployments, placing specific emphasis on 
+simplicity of development and integration, while applying existing authentication, authorization, and 
+privacy models. 
+
+Its intent is to reduce the cost and complexity of user management operations by providing a common 
+user schema and extension model, as well as binding documents to provide patterns for exchanging 
+this schema using standard protocols. 
+In essence: make it fast, cheap, and easy to move users in to, out of, and around the cloud.
+
+
+**More Info on:**
+
+http://www.simplecloud.info/
+
+https://tools.ietf.org/html/rfc7644
+
+https://tools.ietf.org/html/rfc7643
 
 
 ## Installation
@@ -10,12 +28,11 @@ scim2-compliance-test-utility
 
 git clone https://github.com/suvera/scim2-compliance-test-utility.git
 
-
 cd scim2-compliance-test-utility
 
-# Start application on port 8080
-java -jar dist/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
+mvn clean install
 
+java -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 # Logs
 2020-09-09 13:06:12.567  INFO 20316 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer 
@@ -23,20 +40,6 @@ java -jar dist/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 2020-09-09 13:06:12.578  INFO 20316 --- [  restartedMain] d.s.o.scim2.compliance.Scim2Application  
 : Started Scim2Application in 2.735 seconds (JVM running for 3.489)
 
-
-# it's done
-
-
-
-############################
-#
-#   or, in other way you can compile it in your own way using maven and then start application.
-#
-mvn clean install
-
-mvn install:install-file -Dfile=dependencies/scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar -DgroupId=org.wso2.scim2 -DartifactId=scim2-client -Dversion=1.0.1-SNAPSHOT
-
-java -cp dependencies -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 ```
 

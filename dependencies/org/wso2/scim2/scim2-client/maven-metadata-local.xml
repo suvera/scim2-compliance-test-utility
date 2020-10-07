@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.wso2.scim2</groupId>
+  <artifactId>scim2-client</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20201007065208</lastUpdated>
+  </versioning>
+</metadata>

@@ -54,6 +54,7 @@ public class TestExecutionService {
             result.setException(e);
             database.addTestResult(runId, result);
             database.addTestResult(runId, new TestCaseResult("--DONE--"));
+            System.out.println("Failed with exception " + e);
             return;
         }
 
@@ -72,6 +73,7 @@ public class TestExecutionService {
             result.setException(e);
             database.addTestResult(runId, result);
             database.addTestResult(runId, new TestCaseResult("--DONE--"));
+            System.out.println("Failed with exception " + e);
             return;
         }
 
@@ -90,6 +92,7 @@ public class TestExecutionService {
             result.setException(e);
             database.addTestResult(runId, result);
             database.addTestResult(runId, new TestCaseResult("--DONE--"));
+            System.out.println("Failed with exception " + e);
             return;
         }
 
