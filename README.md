@@ -32,7 +32,7 @@ cd scim2-compliance-test-utility
 
 mvn clean install
 
-java -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
+java -Dserver.port=8080 -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
 
 # Logs
 2020-09-09 13:06:12.567  INFO 20316 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer 

@@ -7,35 +7,35 @@
     <snapshot>
       <localCopy>true</localCopy>
     </snapshot>
-    <lastUpdated>20201007065208</lastUpdated>
+    <lastUpdated>20201009064921</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <classifier>jar-with-dependencies</classifier>
         <extension>jar</extension>
         <value>1.0.1-SNAPSHOT</value>
-        <updated>20201007065208</updated>
+        <updated>20201009064921</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>sources</classifier>
         <extension>jar</extension>
         <value>1.0.1-SNAPSHOT</value>
-        <updated>20201007065208</updated>
+        <updated>20201009064921</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>javadoc</classifier>
         <extension>jar</extension>
         <value>1.0.1-SNAPSHOT</value>
-        <updated>20201007065208</updated>
+        <updated>20201009064921</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>jar</extension>
         <value>1.0.1-SNAPSHOT</value>
-        <updated>20201007065208</updated>
+        <updated>20201009064921</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
         <value>1.0.1-SNAPSHOT</value>
-        <updated>20201007065208</updated>
+        <updated>20201009064921</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>

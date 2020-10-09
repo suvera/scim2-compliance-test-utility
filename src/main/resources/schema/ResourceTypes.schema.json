@@ -39,12 +39,8 @@
                     "schemas": {
                         "type": "array",
                         "minItems": 1,
-                        "maxItems": 1,
                         "items": {
-                            "type": "string",
-                            "enum": [
-                                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
-                            ]
+                            "type": "string"
                         }
                     },
                     "name": {
@@ -60,18 +56,17 @@
                         "type": "string"
                     },
                     "schemaExtensions": {
-                        "type": "object",
-                        "properties": {
-                            "schema": {
-                                "type": "string"
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/schemaExtensions"
                             },
-                            "required": {
-                                "type": "boolean"
+                            {
+                                "type": "array",
+                                "description": "List of Schema Extensions ",
+                                "items": {
+                                    "$ref": "#/definitions/schemaExtensions"
+                                }
                             }
-                        },
-                        "required": [
-                            "schema",
-                            "required"
                         ]
                     }
                 },
@@ -83,6 +78,24 @@
                     "schema"
                 ]
             }
+        }
+    },
+    "definitions": {
+        "schemaExtensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "schema": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "schema",
+                "required"
+            ]
         }
     }
 }

@@ -1,7 +1,7 @@
 banner:
     location: classpath:/banner.txt
 server:
-    port: 8080
+    port: 8081
     hostName: localhost
 
 spring:

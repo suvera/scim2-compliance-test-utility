@@ -116,7 +116,8 @@
                             "User",
                             "Group",
                             "external",
-                            "uri"
+                            "uri",
+                            "resource"
                         ]
                     }
                 }

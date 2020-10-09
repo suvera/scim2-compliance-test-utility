@@ -27,7 +27,7 @@ public class FakeData {
         Xmap root = Xmap.q();
 
         Name name = faker.name();
-        root.k("userName", name.username());
+        root.k("userName", name.username().replaceAll("[^a-z-A-Z_0-9]+", ""));
         root.k("externalId", name.username());
 
         root.k("displayName", name.name());
@@ -88,9 +88,10 @@ public class FakeData {
         List<String> schemaList = new ArrayList<>();
         schemaList.add(resourceType.getSchema());
         if (resourceType.getSchemaExtensions() != null) {
-            SchemaExtensionName ext = resourceType.getSchemaExtensions();
-            schemaList.add(ext.getSchema());
-            root.k(ext.getSchema(), getExtensionData(ext.getSchema(), schemas, resourceTypes));
+            for (SchemaExtensionName ext : resourceType.getSchemaExtensions()) {
+                schemaList.add(ext.getSchema());
+                root.k(ext.getSchema(), getExtensionData(ext.getSchema(), schemas, resourceTypes));
+            }
         }
         root.k("schemas", schemaList);
 
@@ -112,6 +113,10 @@ public class FakeData {
         Xmap root = Xmap.q();
 
         for (ScimAttribute attr : attributes) {
+            if (attr.getName().equals("manager")) {
+                continue;
+            }
+
             boolean hasEnum = (attr.getCanonicalValues() != null && !attr.getCanonicalValues().isEmpty());
 
             switch (attr.getType()) {
@@ -148,7 +153,11 @@ public class FakeData {
                     if (hasEnum) {
                         root.k(attr.getName(), attr.getCanonicalValues().get(0));
                     } else {
-                        root.k(attr.getName(), faker.lorem().fixedString(10));
+                        if (attr.getName().equals("employeeNumber")) {
+                            root.k(attr.getName(), "E" + faker.number().numberBetween(100000, 999999));
+                        } else {
+                            root.k(attr.getName(), faker.lorem().fixedString(10));
+                        }
                     }
                     break;
             }

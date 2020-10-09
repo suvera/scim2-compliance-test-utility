@@ -323,6 +323,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         result.setRequestMethod("POST");
 
         Map<String, Object> group = new HashMap<>();
+        group.put("schemas", Collections.singletonList(ScimConstants.SCHEMA_GROUP));
         group.put("displayName", (new Faker()).name().username());
 
         String body = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(group);

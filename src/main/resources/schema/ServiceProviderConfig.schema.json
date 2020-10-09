@@ -128,7 +128,9 @@
                             "oauth2",
                             "oauthbearertoken",
                             "httpbasic",
-                            "httpdigest"
+                            "httpdigest",
+                            "bearer",
+                            "Bearer"
                         ]
                     },
                     "name": {
