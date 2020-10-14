@@ -1,0 +1,162 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "User",
+    "description": "SCIM2 Core User",
+    "type": "object",
+    "additionalItems": false,
+    "properties": {
+        "schemas": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "string"
+            }
+        },
+        "id": {
+            "type": "string",
+            "enum": [
+                "urn:ietf:params:scim:schemas:core:2.0:User"
+            ]
+        },
+        "meta": {
+            "$ref": "#/definitions/meta"
+        },
+        "name": {
+            "type": "string",
+            "enum": [
+                "User"
+            ]
+        },
+        "description": {
+            "type": "string"
+        },
+        "attributes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$ref": "#/definitions/attribute"
+            }
+        }
+    },
+    "required": [
+        "schemas",
+        "id",
+        "meta",
+        "name"
+    ],
+    "definitions": {
+        "meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "resourceType": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "lastModified": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                }
+            }
+        },
+        "attribute": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "enum": [
+                        "userName",
+                        "name",
+                        "formatted",
+                        "familyName",
+                        "givenName",
+                        "middleName",
+                        "honorificPrefix",
+                        "honorificSuffix",
+                        "displayName",
+                        "nickName",
+                        "profileUrl",
+                        "title",
+                        "userType",
+                        "preferredLanguage",
+                        "locale",
+                        "timezone",
+                        "active",
+                        "password",
+                        "emails",
+                        "phoneNumbers",
+                        "ims",
+                        "photos",
+                        "addresses",
+                        "streetAddress",
+                        "locality",
+                        "region",
+                        "postalCode",
+                        "country",
+                        "groups",
+                        "entitlements",
+                        "roles",
+                        "x509Certificates",
+                        "primary",
+                        "type",
+                        "display",
+                        "value",
+                        "$ref"
+                    ]
+                },
+                "type": {
+                    "type": "string"
+                },
+                "subAttributes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/attribute"
+                    }
+                },
+                "multiValued": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "canonicalValues": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "caseExact": {
+                    "type": "boolean"
+                },
+                "mutability": {
+                    "type": "string"
+                },
+                "returned": {
+                    "type": "string"
+                },
+                "uniqueness": {
+                    "type": "string"
+                },
+                "referenceTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ]
+        }
+    }
+}

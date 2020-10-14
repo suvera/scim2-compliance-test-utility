@@ -142,14 +142,7 @@
                 "referenceTypes": {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "enum": [
-                            "User",
-                            "Group",
-                            "external",
-                            "uri",
-                            "resource"
-                        ]
+                        "type": "string"
                     }
                 }
             },
