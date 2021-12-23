@@ -51,6 +51,6 @@ java -Dserver.port=8080 -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT
 
 
 
-## Do you want to SCIM 2.0 Server/Client?
+## Do you want to develop SCIM 2.0 Server/Client?
 
 Here is the JAVA SDK https://github.com/suvera/scim2-sdk
