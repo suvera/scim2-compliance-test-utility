@@ -47,6 +47,6 @@ java -Dserver.port=8080 -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT
 ## Screenshots
 
 
-![Service Screenshot](scim_screenshot1.png)
+![Service Screenshot](https://suvera.github.io/assets/images/scim_screenshot1.png)
 
 
