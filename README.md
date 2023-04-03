@@ -43,6 +43,9 @@ java -Dserver.port=8080 -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT
 
 ```
 
+Open Test utility in the browser
+http://localhost:8080/
+
 
 ## Screenshots
 
