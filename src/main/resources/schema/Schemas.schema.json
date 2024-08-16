@@ -152,10 +152,41 @@
                 "multiValued",
                 "description",
                 "required",
-                "caseExact",
                 "mutability",
                 "returned"
-            ]
+            ],
+            "dependencies": {
+                "type": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": ["string"]
+                                },
+                                "caseExact": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": ["caseExact"]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "boolean",
+                                        "decimal",
+                                        "integer",
+                                        "dateTime",
+                                        "reference",
+                                        "complex",
+                                        "binary"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
         }
     }
 }
