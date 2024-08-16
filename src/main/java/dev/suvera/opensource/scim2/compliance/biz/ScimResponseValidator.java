@@ -80,6 +80,11 @@ public class ScimResponseValidator {
             );
         }
 
+        // No reason to check Content-Type on 204
+        if (statusCode == 204) {
+            return;
+        }
+
         List<String> contentTypes = headers.get("Content-Type");
         boolean found = false;
         for (String expected : ScimConstants.CONTENT_TYPES) {
