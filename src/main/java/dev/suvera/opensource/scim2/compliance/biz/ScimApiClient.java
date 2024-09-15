@@ -82,6 +82,7 @@ public class ScimApiClient {
             if (query != null) {
                 url += "?" + query;
             }
+            payload = null;
         }
         log.info("Http {} request {}", method, url);
 
@@ -105,25 +106,32 @@ public class ScimApiClient {
 
         if (HttpMethod.DELETE.equals(method)) {
             if (body != null && !body.isEmpty()) {
-                builder.delete(RequestBody.create(body, MediaType.parse("application/scim+json")));
+                builder = builder.delete(RequestBody.create(body, MediaType.parse("application/scim+json")));
             } else {
-                builder.header(CONTENT_TYPE, "application/scim+json").delete();
+                builder = builder.header(CONTENT_TYPE, "application/scim+json").delete();
             }
+            log.info("XXXXX DELETE request {} ", url);
         } else if (HttpMethod.PUT.equals(method)) {
             if (body == null) {
                 body = "";
             }
-            builder.put(RequestBody.create(body, MediaType.parse("application/scim+json")));
+            log.info("XXXXX PUT request {} ", url);
+            builder = builder.put(RequestBody.create(body, MediaType.parse("application/scim+json")));
         } else if (HttpMethod.PATCH.equals(method)) {
             if (body == null) {
                 body = "";
             }
-            builder.patch(RequestBody.create(body, MediaType.parse("application/scim+json")));
+            log.info("XXXXX PATCH request {} ", url);
+            builder = builder.patch(RequestBody.create(body, MediaType.parse("application/scim+json")));
         } else if (!HttpMethod.GET.equals(method)) {
             if (body == null) {
                 body = "";
             }
-            builder.post(RequestBody.create(body, MediaType.parse("application/scim+json")));
+            log.info("XXXXX POST request {} ({})", url, method.name());
+            builder = builder.post(RequestBody.create(body, MediaType.parse("application/scim+json")));
+        } else {
+            log.info("XXXXX GET request {} ({})", url, method.name());
+            builder = builder.get();
         }
 
         Request request = builder.build();
