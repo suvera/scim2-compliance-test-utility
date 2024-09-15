@@ -45,4 +45,12 @@ public class Schema {
     public ScimAttribute getAttribute(String name) {
         return attributes.get(name);
     }
+
+    public boolean hasAttribute(String name) {
+        return attributes.containsKey(name);
+    }
+
+    public boolean hasSubAttribute(String name, String subName) {
+        return attributes.get(name) != null && attributes.get(name).hasSubAttribute(subName);
+    }
 }

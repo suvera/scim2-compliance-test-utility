@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.data.json.SchemaExtensionName;
 import dev.suvera.opensource.scim2.compliance.utils.JsonSchemaBuilder;
-import io.scim2.swagger.client.ScimApiException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -47,7 +47,7 @@ public class Schemas {
             if (ScimConstants.coreSchemas.contains(schema.getId())
                     && resourceTypes.getResourceBySchema(schema.getId()) == null) {
                 throw new ScimApiException("Could not find ResourceType for core Schema '"
-                        + schema.getId() + "'");
+                                           + schema.getId() + "'");
             }
         }
 

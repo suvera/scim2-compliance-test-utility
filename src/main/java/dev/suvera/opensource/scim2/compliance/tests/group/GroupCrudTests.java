@@ -3,14 +3,14 @@ package dev.suvera.opensource.scim2.compliance.tests.group;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.javafaker.Faker;
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.biz.ScimResponseValidator;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2GroupsApi;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2UsersApi;
 import dev.suvera.opensource.scim2.compliance.data.*;
+import dev.suvera.opensource.scim2.compliance.enums.HttpMethod;
 import dev.suvera.opensource.scim2.compliance.tests.AbstractTestsCase;
 import dev.suvera.opensource.scim2.compliance.utils.FakeData;
-import io.scim2.swagger.client.ScimApiException;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2GroupsApi;
-import io.scim2.swagger.client.api.Scimv2UsersApi;
 
 import java.util.*;
 
@@ -75,7 +75,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         testCaseResults.add(resultDelete);
 
         try {
-            user1 = createUser();
+            user1 = createUser(resultCreate);
             createResponse = createTest(resultCreate);
             group1 = jsonMapper.readValue(createResponse, Group.class);
         } catch (Exception e) {
@@ -143,18 +143,28 @@ public class GroupCrudTests extends AbstractTestsCase {
     /**
      * Create User- to add members
      */
-    private User createUser() throws Exception {
+    private User createUser(TestCaseResult result) throws Exception {
         Map<String, Object> user = FakeData.generateUser(schemas, resourceTypes);
         String body = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
 
+        result.setRequestBody(body);
         String endPoint = resourceTypes
                 .getResourceBySchema(ScimConstants.SCHEMA_USER)
                 .getEndpoint();
 
         ScimApiResponse<String> response = builder
                 .getScimv2UsersClient(endPoint)
-                .createUserWithHttpInfo(null, null, body);
+                .createUserWithHttpInfo(body);
 
+        result.setResponseBody(response.getData());
+        result.setResponseCode(response.getStatusCode());
+        result.setResponseHeaders(response.getHeaders());
+
+        ScimResponseValidator.processResponseHeaders(
+                response.getStatusCode(),
+                response.getHeaders(),
+                Collections.singletonList(201)
+        );
 
         return ScimResponseValidator.processResponse(
                 response.getData(),
@@ -206,12 +216,7 @@ public class GroupCrudTests extends AbstractTestsCase {
 
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
         api.getScimApiClient().setURL(group1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.updateGroupWithHttpInfo(
-                null,
-                null,
-                body,
-                "PATCH"
-        );
+        ScimApiResponse<String> response = api.updateGroupWithHttpInfo(body, HttpMethod.PATCH);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -247,12 +252,7 @@ public class GroupCrudTests extends AbstractTestsCase {
 
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
         api.getScimApiClient().setURL(group1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.updateGroupWithHttpInfo(
-                null,
-                null,
-                body,
-                "PUT"
-        );
+        ScimApiResponse<String> response = api.updateGroupWithHttpInfo(body, HttpMethod.PUT);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -286,10 +286,8 @@ public class GroupCrudTests extends AbstractTestsCase {
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(endPoint);
 
         ScimApiResponse<String> response = api.getGroupWithHttpInfo(
-                null,
-                null,
                 filter,
-                0,
+                1,
                 10,
                 null,
                 null
@@ -335,7 +333,7 @@ public class GroupCrudTests extends AbstractTestsCase {
 
         ScimApiResponse<String> response = builder
                 .getScimv2GroupsClient(endPoint)
-                .createGroupWithHttpInfo(null, null, body);
+                .createGroupWithHttpInfo(body);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -385,7 +383,7 @@ public class GroupCrudTests extends AbstractTestsCase {
     private void readTest(Group group1, TestCaseResult result) throws Exception {
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
         api.getScimApiClient().setURL(group1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.getGroupByIdWithHttpInfo(null, null);
+        ScimApiResponse<String> response = api.getGroupByIdWithHttpInfo();
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());

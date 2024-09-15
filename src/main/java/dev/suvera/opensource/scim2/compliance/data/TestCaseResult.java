@@ -2,7 +2,7 @@ package dev.suvera.opensource.scim2.compliance.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +44,7 @@ public class TestCaseResult {
                 "\n\t, responseBody='" + responseBody + '\'' +
                 "\n\t, responseCode=" + responseCode +
                 "\n\t, responseHeaders=" + responseHeaders +
-                "\n\t, exception=" + ( exception != null ? ExceptionUtils.getFullStackTrace(exception) : "null\n") +
+                "\n\t, exception=" + ( exception != null ? ExceptionUtils.getStackTrace(exception) : "null\n") +
                 '}';
     }
 }

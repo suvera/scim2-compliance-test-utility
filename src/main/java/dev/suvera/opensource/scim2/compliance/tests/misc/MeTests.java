@@ -1,11 +1,10 @@
 package dev.suvera.opensource.scim2.compliance.tests.misc;
 
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.biz.ScimResponseValidator;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2UsersApi;
 import dev.suvera.opensource.scim2.compliance.data.*;
 import dev.suvera.opensource.scim2.compliance.tests.AbstractTestsCase;
-import io.scim2.swagger.client.ScimApiException;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2UsersApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,15 +50,7 @@ public class MeTests extends AbstractTestsCase {
         api.getScimApiClient().setURL(builder.getTestContext().getEndPoint() + ScimConstants.URI_ME);
         ScimApiResponse<String> response;
         try {
-            response = api.getUserWithHttpInfo(
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
+            response = api.getUserWithHttpInfo(null, null, null, null, null);
 
             result.setResponseCode(response.getStatusCode());
             result.setResponseHeaders(response.getHeaders());

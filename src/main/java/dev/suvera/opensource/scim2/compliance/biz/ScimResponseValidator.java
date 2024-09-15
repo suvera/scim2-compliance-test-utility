@@ -7,7 +7,6 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import dev.suvera.opensource.scim2.compliance.data.ScimConstants;
-import io.scim2.swagger.client.ScimApiException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;

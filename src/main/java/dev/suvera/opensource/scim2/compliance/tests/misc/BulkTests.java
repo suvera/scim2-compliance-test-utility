@@ -1,14 +1,13 @@
 package dev.suvera.opensource.scim2.compliance.tests.misc;
 
 import com.github.javafaker.Faker;
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.biz.ScimResponseValidator;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2UsersApi;
 import dev.suvera.opensource.scim2.compliance.data.*;
 import dev.suvera.opensource.scim2.compliance.tests.AbstractTestsCase;
 import dev.suvera.opensource.scim2.compliance.utils.FakeData;
 import dev.suvera.opensource.scim2.compliance.utils.Xmap;
-import io.scim2.swagger.client.ScimApiException;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2UsersApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +75,7 @@ public class BulkTests extends AbstractTestsCase {
 
         ScimApiResponse<String> response;
         try {
-            response = api.getUsersByPostWithHttpInfo(body);
+            response = api.createWithHttpInfo(body);
 
             result.setResponseBody(response.getData());
             result.setResponseCode(response.getStatusCode());

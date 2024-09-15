@@ -27,4 +27,16 @@ public class ScimAttribute {
     private String returned;
     private String uniqueness;
     private List<String> referenceTypes;
+
+    public boolean hasSubAttribute(String name) {
+        if (subAttributes == null) {
+            return false;
+        }
+        for (ScimAttribute subAttribute : subAttributes) {
+            if (subAttribute.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,9 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri Oct 09 12:19:21 IST 2020
-scim2-client-1.0.1-SNAPSHOT.jar>=
-scim2-client-1.0.1-SNAPSHOT-javadoc.jar>=
-scim2-client-1.0.1-SNAPSHOT.pom>local-libs=
-scim2-client-1.0.1-SNAPSHOT.pom>=
-scim2-client-1.0.1-SNAPSHOT-jar-with-dependencies.jar>=
-scim2-client-1.0.1-SNAPSHOT-sources.jar>=
-scim2-client-1.0.1-SNAPSHOT.jar>local-libs=

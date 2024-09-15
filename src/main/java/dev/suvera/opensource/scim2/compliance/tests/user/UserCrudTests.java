@@ -1,13 +1,13 @@
 package dev.suvera.opensource.scim2.compliance.tests.user;
 
 import com.github.fge.jsonschema.core.report.ProcessingReport;
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.biz.ScimResponseValidator;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2UsersApi;
 import dev.suvera.opensource.scim2.compliance.data.*;
+import dev.suvera.opensource.scim2.compliance.enums.HttpMethod;
 import dev.suvera.opensource.scim2.compliance.tests.AbstractTestsCase;
 import dev.suvera.opensource.scim2.compliance.utils.FakeData;
-import io.scim2.swagger.client.ScimApiException;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2UsersApi;
 
 import java.util.*;
 
@@ -136,27 +136,22 @@ public class UserCrudTests extends AbstractTestsCase {
      */
     private void patchTest(User user1, TestCaseResult result) throws Exception {
         String body = "{\n" +
-                "\t\"schemas\": [\n" +
-                "\t\t\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"\n" +
-                "\t],\n" +
-                "\t\"Operations\": [\n" +
-                "\t\t{\n" +
-                "\t\t\t\"op\": \"replace\",\n" +
-                "\t\t\t\"path\": \"name.familyName\",\n" +
-                "\t\t\t\"value\": \"Stagger\"\n" +
-                "\t\t}\n" +
-                "\t]\n" +
-                "}";
+                      "\t\"schemas\": [\n" +
+                      "\t\t\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"\n" +
+                      "\t],\n" +
+                      "\t\"Operations\": [\n" +
+                      "\t\t{\n" +
+                      "\t\t\t\"op\": \"replace\",\n" +
+                      "\t\t\t\"path\": \"name.familyName\",\n" +
+                      "\t\t\t\"value\": \"Stagger\"\n" +
+                      "\t\t}\n" +
+                      "\t]\n" +
+                      "}";
         result.setRequestBody(body);
 
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
         api.getScimApiClient().setURL(user1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.updateUserWithHttpInfo(
-                null,
-                null,
-                body,
-                "PATCH"
-        );
+        ScimApiResponse<String> response = api.updateUserWithHttpInfo(body, HttpMethod.PATCH);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -193,12 +188,7 @@ public class UserCrudTests extends AbstractTestsCase {
 
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
         api.getScimApiClient().setURL(user1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.updateUserWithHttpInfo(
-                null,
-                null,
-                body,
-                "PUT"
-        );
+        ScimApiResponse<String> response = api.updateUserWithHttpInfo(body, HttpMethod.PUT);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -232,10 +222,8 @@ public class UserCrudTests extends AbstractTestsCase {
         Scimv2UsersApi api = builder.getScimv2UsersClient(endPoint);
 
         ScimApiResponse<String> response = api.getUserWithHttpInfo(
-                null,
-                null,
                 filter,
-                0,
+                1,
                 10,
                 null,
                 null
@@ -278,7 +266,7 @@ public class UserCrudTests extends AbstractTestsCase {
 
         ScimApiResponse<String> response = builder
                 .getScimv2UsersClient(endPoint)
-                .createUserWithHttpInfo(null, null, body);
+                .createUserWithHttpInfo(body);
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());
@@ -326,7 +314,7 @@ public class UserCrudTests extends AbstractTestsCase {
     private void readTest(User user1, TestCaseResult result) throws Exception {
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
         api.getScimApiClient().setURL(user1.getMeta().getLocation());
-        ScimApiResponse<String> response = api.getUserByIdWithHttpInfo(null, null);
+        ScimApiResponse<String> response = api.getUserByIdWithHttpInfo();
 
         result.setResponseBody(response.getData());
         result.setResponseCode(response.getStatusCode());

@@ -1,11 +1,9 @@
 package dev.suvera.opensource.scim2.compliance.biz;
 
 import dev.suvera.opensource.scim2.compliance.data.*;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2ResourceTypeApi;
-import io.scim2.swagger.client.api.Scimv2SchemaApi;
-import io.scim2.swagger.client.api.Scimv2ServiceProviderConfigApi;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 
@@ -15,6 +13,7 @@ import java.util.Collections;
  */
 @Data
 public class SchemaFetcher {
+    private final static Logger log = LogManager.getLogger(SchemaFetcher.class);
     private final ScimApiClientBuilder clientBuilder;
 
     public SchemaFetcher(TestContext testContext) {
@@ -41,7 +40,7 @@ public class SchemaFetcher {
 
     public ResourceTypes fetchResourceTypes() throws Exception {
         Scimv2ResourceTypeApi api = clientBuilder.getResourceTypeClient();
-        ScimApiResponse<String> response = api.getResourceTypeWithHttpInfo();
+        ScimApiResponse<String> response = api.getResourceTypesWithHttpInfo();
 
         ScimResponseValidator.processResponseHeaders(
                 response.getStatusCode(),
@@ -59,9 +58,11 @@ public class SchemaFetcher {
         resourceTypes.init();
         if (clientBuilder.getTestContext().isCheckIndResource()) {
             for (ResourceType resourceType : resourceTypes.getResourceTypes()) {
+                log.info("Loading Metadata for ResourceType: {}", resourceType.getMeta().getLocation());
                 api.getScimApiClient().setURL(resourceType.getMeta().getLocation());
                 api.getScimApiClient().setServicePath(null);
-                response = api.getResourceTypeWithHttpInfo();
+                response = api.getRecordByIdWithHttpInfo();
+
 
                 ScimResponseValidator.processResponseHeaders(
                         response.getStatusCode(),
@@ -101,7 +102,7 @@ public class SchemaFetcher {
             for (Schema schema : schemas.getSchemas()) {
                 api.getScimApiClient().setURL(schema.getMeta().getLocation());
                 api.getScimApiClient().setServicePath(null);
-                response = api.getgetSchemasWithHttpInfo();
+                response = api.getRecordByIdWithHttpInfo();
 
                 ScimResponseValidator.processResponseHeaders(
                         response.getStatusCode(),

@@ -1,13 +1,12 @@
 package dev.suvera.opensource.scim2.compliance.tests.misc;
 
 import com.github.fge.jsonschema.core.report.ProcessingReport;
+import dev.suvera.opensource.scim2.compliance.biz.ScimApiException;
 import dev.suvera.opensource.scim2.compliance.biz.ScimResponseValidator;
+import dev.suvera.opensource.scim2.compliance.biz.Scimv2UsersApi;
 import dev.suvera.opensource.scim2.compliance.data.*;
 import dev.suvera.opensource.scim2.compliance.tests.AbstractTestsCase;
 import dev.suvera.opensource.scim2.compliance.utils.Xmap;
-import io.scim2.swagger.client.ScimApiException;
-import io.scim2.swagger.client.ScimApiResponse;
-import io.scim2.swagger.client.api.Scimv2UsersApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,7 +110,7 @@ public class SearchTests extends AbstractTestsCase {
 
         ScimApiResponse<String> response;
         try {
-            response = api.getUsersByPostWithHttpInfo(body);
+            response = api.createUserWithHttpInfo(body);
 
             result.setResponseBody(response.getData());
             result.setResponseCode(response.getStatusCode());
