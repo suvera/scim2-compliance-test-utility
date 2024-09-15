@@ -1,2 +1,7 @@
 Dockerfile
 .git
+target
+build
+.idea
+*.iml
+.gradle

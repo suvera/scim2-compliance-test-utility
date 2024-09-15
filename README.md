@@ -23,28 +23,42 @@ https://tools.ietf.org/html/rfc7643
 
 ## Installation
 
+Use docker or build your own jar
+
+
+### via Docker
 
 ```
+# on Linux/Windows
+docker run -it --rm --name scim2-compliance-test-utility -p 8081:8081 suvera/scim2-compliance-test-utility:1.0.0
 
+# on MAC OS (specify platform)
+docker run -it --rm --name scim2-compliance-test-utility  -p 8081:8081 --platform linux/amd64 suvera/scim2-compliance-test-utility:1.0.0
+```
+
+Open Test utility in the browser
+http://localhost:8081/
+
+
+### Or, build your own JAR
+```
 git clone https://github.com/suvera/scim2-compliance-test-utility.git
 
 cd scim2-compliance-test-utility
 
 mvn clean install
 
-java -Dserver.port=8080 -jar target/scim2-compliance-test-utility-0.0.1-SNAPSHOT.jar
+java -Dserver.port=8081 -jar target/scim2-compliance-test-utility-1.0.0.jar
 
 # Logs
 2020-09-09 13:06:12.567  INFO 20316 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer 
- : Tomcat started on port(s): 8080 (http) with context path ''
+ : Tomcat started on port(s): 8081 (http) with context path ''
 2020-09-09 13:06:12.578  INFO 20316 --- [  restartedMain] d.s.o.scim2.compliance.Scim2Application  
 : Started Scim2Application in 2.735 seconds (JVM running for 3.489)
-
-
 ```
 
 Open Test utility in the browser
-http://localhost:8080/
+http://localhost:8081/
 
 
 ## Screenshots
