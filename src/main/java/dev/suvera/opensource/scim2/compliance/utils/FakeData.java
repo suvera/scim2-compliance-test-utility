@@ -7,7 +7,8 @@ import com.github.javafaker.PhoneNumber;
 import dev.suvera.opensource.scim2.compliance.data.*;
 import dev.suvera.opensource.scim2.compliance.data.json.SchemaExtensionName;
 import dev.suvera.opensource.scim2.compliance.data.json.ScimAttribute;
-
+import java.util.Base64;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -17,6 +18,7 @@ import java.util.*;
 public class FakeData {
 
     public static final Faker faker = new Faker();
+    public static final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     public static Map<String, Object> generateUser(
             Schemas schemas,
@@ -229,7 +231,7 @@ public class FakeData {
                 if (attr.getName().equals("$ref")) {
                     // TODO: Implement reference data
                     value = null;
-                 } else {
+                } else {
                     value = faker.internet().avatar();
                 }
                 break;
@@ -240,6 +242,15 @@ public class FakeData {
 
             case "boolean":
                 value = true;
+                break;
+
+            case "datetime":
+                isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                value = isoFormat.format(new Date());
+                break;
+
+            case "binary":
+                value = Base64.getEncoder().encodeToString(faker.lorem().fixedString(10).getBytes());
                 break;
 
             case "decimal":
