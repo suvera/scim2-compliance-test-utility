@@ -7,7 +7,7 @@ import com.github.javafaker.PhoneNumber;
 import dev.suvera.opensource.scim2.compliance.data.*;
 import dev.suvera.opensource.scim2.compliance.data.json.SchemaExtensionName;
 import dev.suvera.opensource.scim2.compliance.data.json.ScimAttribute;
-import java.util.Base64;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -78,43 +78,51 @@ public class FakeData {
         }
 
         if (schema.hasAttribute("addresses")) {
-            Address address = faker.address();
+            ScimAttribute addresses = schema.getAttribute("addresses");
             Object attrData;
-            Xmap q = Xmap.q();
-            // Loop through all the attributes of the address
-            for (ScimAttribute attr : schema.getAttribute("addresses").getSubAttributes()) {
-                switch (attr.getName()) {
-                    case "formatted":
-                        q.k("formatted", address.fullAddress());
-                        break;
-                    case "streetAddress":
-                        q.k("streetAddress", address.streetAddress());
-                        break;
-                    case "locality":
-                        q.k("locality", address.cityName());
-                        break;
-                    case "region":
-                        q.k("region", address.state());
-                        break;
-                    case "postalCode":
-                        q.k("postalCode", address.zipCode());
-                        break;
-                    case "country":
-                        q.k("country", "Philippines");
-                        break;
-                    case "primary":
-                        q.k("primary", true);
-                        break;
-                    default:
-                        attrData = getAttributeData(attr);
-                        if (attrData != null) {
-                            q.k(attr.getName(), attrData);
-                        }
+            if ("complex".equals(addresses.getType()) && addresses.getSubAttributes() != null) {
+                Address address = faker.address();
+                Xmap q = Xmap.q();
+                // Loop through all the attributes of the address
+                for (ScimAttribute attr : addresses.getSubAttributes()) {
+                    switch (attr.getName()) {
+                        case "formatted":
+                            q.k("formatted", address.fullAddress());
+                            break;
+                        case "streetAddress":
+                            q.k("streetAddress", address.streetAddress());
+                            break;
+                        case "locality":
+                            q.k("locality", address.cityName());
+                            break;
+                        case "region":
+                            q.k("region", address.state());
+                            break;
+                        case "postalCode":
+                            q.k("postalCode", address.zipCode());
+                            break;
+                        case "country":
+                            q.k("country", "Philippines");
+                            break;
+                        case "primary":
+                            q.k("primary", true);
+                            break;
+                        default:
+                            attrData = getAttributeData(attr);
+                            if (attrData != null) {
+                                q.k(attr.getName(), attrData);
+                            }
 
-                        break;
+                            break;
+                    }
+                }
+                root.k("addresses", Collections.singletonList(q.get()));
+            } else {
+                attrData = getAttributeData(addresses);
+                if (attrData != null) {
+                    root.k("addresses", attrData);
                 }
             }
-            root.k("addresses", Collections.singletonList(q.get()));
         }
 
         if (schema.hasAttribute("emails")) {
@@ -132,7 +140,7 @@ public class FakeData {
         if (schema.hasAttribute("name")) {
             Object attrData;
             ScimAttribute nameAttr = schema.getAttribute("name");
-            if ("complex".equals(nameAttr.getType())) {
+            if ("complex".equals(nameAttr.getType()) && nameAttr.getSubAttributes() != null) {
                 Xmap q = Xmap.q();
                 for (ScimAttribute attr : nameAttr.getSubAttributes()) {
                     switch (attr.getName()) {

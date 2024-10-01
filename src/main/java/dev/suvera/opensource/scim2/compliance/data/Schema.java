@@ -47,7 +47,7 @@ public class Schema {
     }
 
     public boolean hasAttribute(String name) {
-        return attributes.containsKey(name);
+        return attributes.containsKey(name) && attributes.get(name) != null;
     }
 
     public boolean hasSubAttribute(String name, String subName) {
