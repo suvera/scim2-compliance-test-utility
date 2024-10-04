@@ -184,7 +184,7 @@ public class FakeData {
             }
             Object attrData = getAttributeData(attr);
             if (attrData != null) {
-                root.k(attr.getName(), getAttributeData(attr));
+                root.k(attr.getName(), attrData);
             }
         }
 
@@ -193,8 +193,12 @@ public class FakeData {
         schemaList.add(resourceType.getSchema());
         if (resourceType.getSchemaExtensions() != null) {
             for (SchemaExtensionName ext : resourceType.getSchemaExtensions()) {
+                Map<String, Object> q = getExtensionData(ext.getSchema(), schemas, resourceTypes);
+                if (q == null) {
+                    continue;
+                }
                 schemaList.add(ext.getSchema());
-                root.k(ext.getSchema(), getExtensionData(ext.getSchema(), schemas, resourceTypes));
+                root.k(ext.getSchema(), q);
             }
         }
         root.k("schemas", schemaList);
@@ -209,14 +213,21 @@ public class FakeData {
     ) {
         Schema schema = schemas.getSchema(schemaName);
         Xmap root = getAttributesData(schema.getAttributes());
+        if (root == null) {
+            return null;
+        }
         return root.get();
     }
 
     private static Xmap getAttributesData(Collection<ScimAttribute> attributes) {
+        if (attributes == null) {
+            return null;
+        }
         Xmap root = Xmap.q();
 
+
         for (ScimAttribute attr : attributes) {
-            if (attr.getName().equals("manager") || attr.getName().equals("$ref")) {
+            if (attr == null || attr.getName() == null || attr.getName().equals("manager") || attr.getName().equals("$ref")) {
                 continue;
             }
 
@@ -226,13 +237,16 @@ public class FakeData {
             }
             root.k(attr.getName(), attrData);
         }
-
+        if (root.get().isEmpty()) {
+            return null;
+        }
         return root;
     }
 
     private static Object getAttributeData(ScimAttribute attr) {
         boolean hasEnum = (attr.getCanonicalValues() != null && !attr.getCanonicalValues().isEmpty());
         Object value;
+        Xmap xmlValue;
 
         switch (attr.getType()) {
             case "reference":
@@ -245,7 +259,12 @@ public class FakeData {
                 break;
 
             case "complex":
-                value = getAttributesData(attr.getSubAttributes()).get();
+                xmlValue = getAttributesData(attr.getSubAttributes());
+                if (xmlValue == null) {
+                    return null;
+                } else {
+                    value = xmlValue.get();
+                }
                 break;
 
             case "boolean":
