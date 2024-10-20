@@ -10,7 +10,7 @@
     </parent>
     <groupId>dev.suvera.opensource</groupId>
     <artifactId>scim2-compliance-test-utility</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>scim2-compliance-test-utility</name>
     <description>SCIM 2.0 Compliance Test Utility</description>
 

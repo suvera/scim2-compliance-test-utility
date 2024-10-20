@@ -3,6 +3,7 @@ package dev.suvera.opensource.scim2.compliance.data.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class ScimAttribute {
     private String name;
     private String type;
@@ -38,5 +40,13 @@ public class ScimAttribute {
             }
         }
         return false;
+    }
+
+    public ScimAttribute(String name, String type) {
+        this.name = name;
+        this.type = type;
+        subAttributes = null;
+        canonicalValues = null;
+        referenceTypes = null;
     }
 }

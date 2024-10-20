@@ -21,8 +21,8 @@ public class FakeData {
     public static final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     public static Map<String, Object> generateUser(
-            Schemas schemas,
-            ResourceTypes resourceTypes
+        Schemas schemas,
+        ResourceTypes resourceTypes
     ) {
         Schema schema = schemas.getSchema(ScimConstants.SCHEMA_USER);
         ResourceType resourceType = resourceTypes.getResourceBySchema(ScimConstants.SCHEMA_USER);
@@ -67,24 +67,34 @@ public class FakeData {
         if (schema.hasAttribute("phoneNumbers")) {
             PhoneNumber phone = faker.phoneNumber();
             root.k(
-                    "phoneNumbers",
-                    Collections.singletonList(
-                            Xmap.q()
-                                    .k("value", phone.cellPhone())
-                                    .k("primary", true)
-                                    .get()
-                    )
+                "phoneNumbers",
+                Collections.singletonList(
+                    Xmap.q()
+                        .k("value", phone.cellPhone())
+                        .k("primary", true)
+                        .get()
+                )
             );
         }
 
         if (schema.hasAttribute("addresses")) {
             ScimAttribute addresses = schema.getAttribute("addresses");
             Object attrData;
-            if ("complex".equals(addresses.getType()) && addresses.getSubAttributes() != null) {
+            if ("complex".equals(addresses.getType())) {
+                List<ScimAttribute> subAttrs = addresses.getSubAttributes();
+                if (subAttrs == null) {
+                    subAttrs = List.of(new ScimAttribute("formatted", "string"),
+                        new ScimAttribute("streetAddress", "string"),
+                        new ScimAttribute("locality", "string"),
+                        new ScimAttribute("region", "string"),
+                        new ScimAttribute("postalCode", "string"),
+                        new ScimAttribute("country", "string"),
+                        new ScimAttribute("primary", "boolean"));
+                }
                 Address address = faker.address();
                 Xmap q = Xmap.q();
                 // Loop through all the attributes of the address
-                for (ScimAttribute attr : addresses.getSubAttributes()) {
+                for (ScimAttribute attr : subAttrs) {
                     switch (attr.getName()) {
                         case "formatted":
                             q.k("formatted", address.fullAddress());
@@ -102,7 +112,7 @@ public class FakeData {
                             q.k("postalCode", address.zipCode());
                             break;
                         case "country":
-                            q.k("country", "Philippines");
+                            q.k("country", address.country());
                             break;
                         case "primary":
                             q.k("primary", true);
@@ -127,22 +137,29 @@ public class FakeData {
 
         if (schema.hasAttribute("emails")) {
             root.k(
-                    "emails",
-                    Collections.singletonList(
-                            Xmap.q()
-                                    .k("value", name.username() + "@opensource.suvera.dev")
-                                    .k("primary", true)
-                                    .get()
-                    )
+                "emails",
+                Collections.singletonList(
+                    Xmap.q()
+                        .k("value", name.username() + "@opensource.suvera.dev")
+                        .k("primary", true)
+                        .get()
+                )
             );
         }
 
         if (schema.hasAttribute("name")) {
             Object attrData;
             ScimAttribute nameAttr = schema.getAttribute("name");
-            if ("complex".equals(nameAttr.getType()) && nameAttr.getSubAttributes() != null) {
+            if ("complex".equals(nameAttr.getType())) {
+                List<ScimAttribute> subAttrs = nameAttr.getSubAttributes();
+                if (subAttrs == null) {
+                    subAttrs = List.of(new ScimAttribute("familyName", "string"),
+                        new ScimAttribute("givenName", "string"),
+                        new ScimAttribute("formatted", "string"),
+                        new ScimAttribute("honorificPrefix", "string"));
+                }
                 Xmap q = Xmap.q();
-                for (ScimAttribute attr : nameAttr.getSubAttributes()) {
+                for (ScimAttribute attr : subAttrs) {
                     switch (attr.getName()) {
                         case "familyName":
                             q.k("familyName", name.lastName());
@@ -165,6 +182,7 @@ public class FakeData {
                     }
                 }
                 root.k("name", q.get());
+
             } else {
                 root.k("name", name.fullName());
             }
@@ -207,9 +225,9 @@ public class FakeData {
     }
 
     private static Map<String, Object> getExtensionData(
-            String schemaName,
-            Schemas schemas,
-            ResourceTypes resourceTypes
+        String schemaName,
+        Schemas schemas,
+        ResourceTypes resourceTypes
     ) {
         Schema schema = schemas.getSchema(schemaName);
         Xmap root = getAttributesData(schema.getAttributes());
