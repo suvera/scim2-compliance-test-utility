@@ -290,6 +290,7 @@ public class FakeData {
                 break;
 
             case "datetime":
+            case "dateTime":
                 isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 value = isoFormat.format(new Date());
                 break;
