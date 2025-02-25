@@ -123,15 +123,6 @@
                 "properties": {
                     "type": {
                         "type": "string",
-                        "enum": [
-                            "oauth",
-                            "oauth2",
-                            "oauthbearertoken",
-                            "httpbasic",
-                            "httpdigest",
-                            "bearer",
-                            "Bearer"
-                        ]
                     },
                     "name": {
                         "type": "string"
