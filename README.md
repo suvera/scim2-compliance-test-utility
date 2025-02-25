@@ -30,10 +30,10 @@ Use docker or build your own jar
 
 ```
 # on Linux/Windows
-docker run -it --rm --name scim2-compliance-test-utility -p 8081:8081 suvera/scim2-compliance-test-utility:1.0.1
+docker run -it --rm --name scim2-compliance-test-utility -p 8081:8081 suvera/scim2-compliance-test-utility:1.0.2
 
 # on MAC OS (specify platform)
-docker run -it --rm --name scim2-compliance-test-utility  -p 8081:8081 --platform linux/amd64 suvera/scim2-compliance-test-utility:1.0.1
+docker run -it --rm --name scim2-compliance-test-utility  -p 8081:8081 --platform linux/amd64 suvera/scim2-compliance-test-utility:1.0.2
 ```
 
 Open Test utility in the browser
@@ -48,7 +48,7 @@ cd scim2-compliance-test-utility
 
 mvn clean install
 
-java -Dserver.port=8081 -jar target/scim2-compliance-test-utility-1.0.1.jar
+java -Dserver.port=8081 -jar target/scim2-compliance-test-utility-1.0.2.jar
 
 # Logs
 2020-09-09 13:06:12.567  INFO 20316 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer 
