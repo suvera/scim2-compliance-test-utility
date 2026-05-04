@@ -31,6 +31,7 @@ public class TestController {
             @RequestParam(required = true, name = "endPoint") @NotNull String endPoint,
             @RequestParam(required = false, name = "username") String username,
             @RequestParam(required = false, name = "password") String password,
+            @RequestParam(required = false, name = "bearerToken") String bearerToken,
             @RequestParam(required = false, name = "jwtToken") String jwtToken,
             @RequestParam(required = false, name = "meCheck", defaultValue = "0") int meCheck,
             @RequestParam(required = false, name = "searchCheck", defaultValue = "0") int searchCheck,
@@ -43,9 +44,14 @@ public class TestController {
 
         TestContext context = new TestContext();
         context.setEndPoint(endPoint);
-        if (jwtToken != null && !jwtToken.isEmpty()) {
+        String token = bearerToken;
+        if (token == null || token.isEmpty()) {
+            token = jwtToken;
+        }
+
+        if (token != null && !token.isEmpty()) {
             context.setAuthType(AuthenticationType.BEARER);
-            context.setBearerToken(jwtToken);
+            context.setBearerToken(token);
         } else {
             context.setAuthType(AuthenticationType.BASIC);
             context.setUserName(username);

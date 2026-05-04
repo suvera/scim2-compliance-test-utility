@@ -150,7 +150,7 @@ public class UserCrudTests extends AbstractTestsCase {
         result.setRequestBody(body);
 
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
-        api.getScimApiClient().setURL(user1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(user1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.updateUserWithHttpInfo(body, HttpMethod.PATCH);
 
         result.setResponseBody(response.getData());
@@ -187,7 +187,7 @@ public class UserCrudTests extends AbstractTestsCase {
         result.setRequestBody(body);
 
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
-        api.getScimApiClient().setURL(user1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(user1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.updateUserWithHttpInfo(body, HttpMethod.PUT);
 
         result.setResponseBody(response.getData());
@@ -294,7 +294,7 @@ public class UserCrudTests extends AbstractTestsCase {
 
     private void deleteTest(User user1, TestCaseResult result) throws Exception {
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
-        api.getScimApiClient().setURL(user1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(user1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.deleteUserWithHttpInfo();
 
         result.setResponseBody(response.getData());
@@ -313,7 +313,7 @@ public class UserCrudTests extends AbstractTestsCase {
 
     private void readTest(User user1, TestCaseResult result) throws Exception {
         Scimv2UsersApi api = builder.getScimv2UsersClient(null);
-        api.getScimApiClient().setURL(user1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(user1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.getUserByIdWithHttpInfo();
 
         result.setResponseBody(response.getData());

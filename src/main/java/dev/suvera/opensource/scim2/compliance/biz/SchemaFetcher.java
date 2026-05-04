@@ -59,7 +59,7 @@ public class SchemaFetcher {
         if (clientBuilder.getTestContext().isCheckIndResource()) {
             for (ResourceType resourceType : resourceTypes.getResourceTypes()) {
                 log.info("Loading Metadata for ResourceType: {}", resourceType.getMeta().getLocation());
-                api.getScimApiClient().setURL(resourceType.getMeta().getLocation());
+                api.getScimApiClient().setURL(resolveLocation(resourceType.getMeta().getLocation()));
                 api.getScimApiClient().setServicePath(null);
                 response = api.getRecordByIdWithHttpInfo();
 
@@ -100,7 +100,7 @@ public class SchemaFetcher {
 
         if (clientBuilder.getTestContext().isCheckIndResource()) {
             for (Schema schema : schemas.getSchemas()) {
-                api.getScimApiClient().setURL(schema.getMeta().getLocation());
+                api.getScimApiClient().setURL(resolveLocation(schema.getMeta().getLocation()));
                 api.getScimApiClient().setServicePath(null);
                 response = api.getRecordByIdWithHttpInfo();
 
@@ -119,6 +119,28 @@ public class SchemaFetcher {
         }
 
         return schemas;
+    }
+
+    private String resolveLocation(String location) {
+        if (location == null || location.isBlank()) {
+            return location;
+        }
+
+        if (location.startsWith("http://") || location.startsWith("https://")) {
+            return location;
+        }
+
+        String endPoint = clientBuilder.getTestContext().getEndPoint();
+        if (endPoint == null || endPoint.isBlank()) {
+            return location;
+        }
+
+        String normalizedEndPoint = endPoint.endsWith("/") ? endPoint.substring(0, endPoint.length() - 1) : endPoint;
+        if (location.startsWith("/")) {
+            return normalizedEndPoint + location;
+        }
+
+        return normalizedEndPoint + "/" + location;
     }
 
 

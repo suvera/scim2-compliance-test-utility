@@ -39,7 +39,16 @@ public class ScimApiClientBuilder {
         builder.interceptors().add(new LoggingInterceptor("APP"));
 
         if (AuthenticationType.BEARER.equals(testContext.getAuthType())) {
-            builder.authenticator(new BearerAuthenticator(testContext.getBearerToken()));
+            String token = testContext.getBearerToken();
+            if (token != null && !token.isEmpty()) {
+                builder.addInterceptor(chain -> {
+                    Request requestWithAuth = chain.request().newBuilder()
+                            .header("Authorization", "Bearer " + token)
+                            .build();
+                    return chain.proceed(requestWithAuth);
+                });
+                builder.authenticator(new BearerAuthenticator(token));
+            }
         } else {
             builder.authenticator(new BasicAuthenticator(testContext.getUserName(), testContext.getPassword()));
         }

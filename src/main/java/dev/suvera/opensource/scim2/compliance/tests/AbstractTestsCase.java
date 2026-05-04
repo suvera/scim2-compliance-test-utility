@@ -33,4 +33,22 @@ public abstract class AbstractTestsCase implements TestsCase {
         this.schemas = schemas;
     }
 
+    protected String resolveLocation(String location) {
+        if (location == null || location.isBlank()) {
+            return location;
+        }
+
+        if (location.startsWith("http://") || location.startsWith("https://")) {
+            return location;
+        }
+
+        String endPoint = builder.getTestContext().getEndPoint();
+        if (endPoint == null || endPoint.isBlank()) {
+            return location;
+        }
+
+        String normalizedEndPoint = endPoint.endsWith("/") ? endPoint.substring(0, endPoint.length() - 1) : endPoint;
+        return location.startsWith("/") ? normalizedEndPoint + location : normalizedEndPoint + "/" + location;
+    }
+
 }

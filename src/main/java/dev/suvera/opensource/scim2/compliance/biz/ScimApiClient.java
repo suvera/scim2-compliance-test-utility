@@ -88,7 +88,8 @@ public class ScimApiClient {
 
         Request.Builder builder = new Request.Builder()
                 .url(url)
-                .header("X-Requested-With", CLIENT_NAME);
+                .header("X-Requested-With", CLIENT_NAME)
+                .header("Accept", "application/scim+json, application/json");
 
         String body = null;
         if (payload != null) {

@@ -182,7 +182,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         }
         try {
             Scimv2UsersApi api = builder.getScimv2UsersClient(null);
-            api.getScimApiClient().setURL(user1.getMeta().getLocation());
+            api.getScimApiClient().setURL(resolveLocation(user1.getMeta().getLocation()));
             api.deleteUserWithHttpInfo();
         } catch (ScimApiException e) {
             e.printStackTrace();
@@ -215,7 +215,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         result.setRequestBody(body);
 
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
-        api.getScimApiClient().setURL(group1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(group1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.updateGroupWithHttpInfo(body, HttpMethod.PATCH);
 
         result.setResponseBody(response.getData());
@@ -251,7 +251,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         result.setRequestBody(body);
 
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
-        api.getScimApiClient().setURL(group1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(group1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.updateGroupWithHttpInfo(body, HttpMethod.PUT);
 
         result.setResponseBody(response.getData());
@@ -363,7 +363,7 @@ public class GroupCrudTests extends AbstractTestsCase {
         //System.out.println("Group Meta:" + group1.getMeta());
 
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
-        api.getScimApiClient().setURL(group1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(group1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.deleteGroupWithHttpInfo();
 
         result.setResponseBody(response.getData());
@@ -382,7 +382,7 @@ public class GroupCrudTests extends AbstractTestsCase {
 
     private void readTest(Group group1, TestCaseResult result) throws Exception {
         Scimv2GroupsApi api = builder.getScimv2GroupsClient(null);
-        api.getScimApiClient().setURL(group1.getMeta().getLocation());
+        api.getScimApiClient().setURL(resolveLocation(group1.getMeta().getLocation()));
         ScimApiResponse<String> response = api.getGroupByIdWithHttpInfo();
 
         result.setResponseBody(response.getData());
