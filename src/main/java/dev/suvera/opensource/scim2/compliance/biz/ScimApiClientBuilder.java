@@ -38,6 +38,14 @@ public class ScimApiClientBuilder {
         builder.networkInterceptors().add(new LoggingInterceptor("NETWORK"));
         builder.interceptors().add(new LoggingInterceptor("APP"));
 
+        if (testContext.getHttpHeaders() != null && !testContext.getHttpHeaders().isEmpty()) {
+            builder.addInterceptor(chain -> {
+                Request.Builder requestBuilder = chain.request().newBuilder();
+                testContext.getHttpHeaders().forEach(requestBuilder::header);
+                return chain.proceed(requestBuilder.build());
+            });
+        }
+
         if (AuthenticationType.BEARER.equals(testContext.getAuthType())) {
             String token = testContext.getBearerToken();
             if (token != null && !token.isEmpty()) {
@@ -49,7 +57,7 @@ public class ScimApiClientBuilder {
                 });
                 builder.authenticator(new BearerAuthenticator(token));
             }
-        } else {
+        } else if (AuthenticationType.BASIC.equals(testContext.getAuthType())) {
             builder.authenticator(new BasicAuthenticator(testContext.getUserName(), testContext.getPassword()));
         }
 
