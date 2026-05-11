@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * author: suvera
@@ -38,7 +35,8 @@ public class TestController {
             @RequestParam(required = false, name = "usersCheck", defaultValue = "0") int usersCheck,
             @RequestParam(required = false, name = "groupsCheck", defaultValue = "0") int groupsCheck,
             @RequestParam(required = false, name = "bulkCheck", defaultValue = "0") int bulkCheck,
-            @RequestParam(required = false, name = "checkIndResLocation", defaultValue = "0") int checkIndResource
+            @RequestParam(required = false, name = "checkIndResLocation", defaultValue = "0") int checkIndResource,
+            @RequestParam(required = false, name = "httpHeaders") String httpHeaders
     ) {
         Xmap map = Xmap.q();
 
@@ -52,10 +50,12 @@ public class TestController {
         if (token != null && !token.isEmpty()) {
             context.setAuthType(AuthenticationType.BEARER);
             context.setBearerToken(token);
-        } else {
+        } else if (username != null && !username.isEmpty()) {
             context.setAuthType(AuthenticationType.BASIC);
             context.setUserName(username);
             context.setPassword(password);
+        } else {
+            context.setAuthType(AuthenticationType.NONE);
         }
 
         context.setMeIncluded(meCheck == 1);
@@ -64,6 +64,7 @@ public class TestController {
         context.setGroupsIncluded(groupsCheck == 1);
         context.setBulkIncluded(bulkCheck == 1);
         context.setCheckIndResource(checkIndResource == 1);
+        context.setHttpHeaders(parseHeaders(httpHeaders));
 
         String runId = UUID.randomUUID().toString();
         executionService.executeTests(runId, context);
@@ -99,5 +100,20 @@ public class TestController {
 
         map.k("data", out);
         return map.get();
+    }
+
+    private Map<String, String> parseHeaders(String headers) {
+        if (headers == null || headers.trim().isEmpty()) {
+            return Collections.emptyMap();
+        }
+        Map<String, String> map = new HashMap<>();
+        String[] lines = headers.split("\\r?\\n");
+        for (String line : lines) {
+            if (line.contains(":")) {
+                String[] parts = line.split(":", 2);
+                map.put(parts[0].trim(), parts[1].trim());
+            }
+        }
+        return map;
     }
 }

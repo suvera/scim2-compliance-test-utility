@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 public enum AuthenticationType {
-    BASIC(1), BEARER(2);
+    BASIC(1), BEARER(2), NONE(0);
 
     private final int id;
 

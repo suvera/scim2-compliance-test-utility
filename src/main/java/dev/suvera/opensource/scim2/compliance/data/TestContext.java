@@ -4,6 +4,8 @@ import dev.suvera.opensource.scim2.compliance.enums.AuthenticationType;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * author: suvera
  * date: 9/3/2020 2:24 PM
@@ -25,6 +27,8 @@ public class TestContext {
     private boolean usersIncluded;
     private boolean groupsIncluded;
     private boolean checkIndResource;
+    private Map<String, String> httpHeaders;
+
 
     @Override
     public String toString() {
@@ -41,6 +45,7 @@ public class TestContext {
                 "\n\t, usersIncluded=" + usersIncluded +
                 "\n\t, groupsIncluded=" + groupsIncluded +
                 "\n\t, checkIndResource=" + checkIndResource +
+                "\n\t, httpHeaders=" + httpHeaders +
                 "\n}";
     }
 }

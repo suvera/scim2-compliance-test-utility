@@ -46,11 +46,19 @@
                         </div>
 
 
+                        <h6><small class="text-muted">(OR)</small></h6>
+
+                        <h4><small class="text-muted">HTTP Headers:</small></h4>
+                        <div class="input-group input-group-sm mb-3">
+                            <textarea class="form-control" name="httpHeaders" id="httpHeaders" rows="3" placeholder="Key: Value (one per line)"></textarea>
+                        </div>
+
+
                         <div class="row ml-3">
                             <button class="btn btn-primary" type="button" id="run-btn" onclick="beginTest();">
                         <span class="spinner-border spinner-border-sm" role="status"
-                              id="run-btn-spin" style="display:none;" aria-hidden="true"></span>
-                                <span id="run-btn-text">Go</span>
+                               id="run-btn-spin" style="display:none;" aria-hidden="true"></span>
+                                 <span id="run-btn-text">Go</span>
                             </button>
                         </div>
                     </div>
